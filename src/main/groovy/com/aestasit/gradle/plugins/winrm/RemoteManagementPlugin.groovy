@@ -41,6 +41,10 @@ public class RemoteManagementPlugin implements Plugin<Project> {
         setLogLevel(project)
         dslEngine.remoteManagement(cl)
       }
+      remoteManagement << { String url, Closure cl ->
+        setLogLevel(project)
+        dslEngine.remoteManagement(url, cl)
+      }
     }
   }
 
