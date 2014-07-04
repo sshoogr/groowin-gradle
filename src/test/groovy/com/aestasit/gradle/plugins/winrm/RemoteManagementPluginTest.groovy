@@ -14,20 +14,35 @@
  * limitations under the License.
  */
 
-package com.aestasit.gradle.plugin
+package com.aestasit.gradle.plugins.winrm
 
-import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.testfixtures.ProjectBuilder
+import org.junit.BeforeClass
+import org.junit.Test
 
 /**
  * 
+ * Test for remote management plugin.
  * 
  * @author Aestas/IT
  *
  */
-public class CoolPlugin implements Plugin<Project> {
+class RemoteManagementPluginTest {
 
-  public void apply(Project project) {
+  static Project project
+
+  @BeforeClass
+  def static void buildProject() {
+    project = ProjectBuilder.builder().build()
+    project.with {
+      apply plugin: 'remoteManagement'
+    }
   }
 
+  @Test
+  public void testSetup() {
+    assert project != null
+  }
+  
 }

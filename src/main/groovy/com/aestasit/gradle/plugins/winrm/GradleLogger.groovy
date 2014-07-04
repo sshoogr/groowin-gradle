@@ -14,35 +14,41 @@
  * limitations under the License.
  */
 
-package com.aestasit.gradle.plugin
+package com.aestasit.gradle.plugins.winrm
 
+import com.aestasit.winrm.log.Logger
 import org.gradle.api.Project
-import org.gradle.testfixtures.ProjectBuilder
-import org.junit.BeforeClass
-import org.junit.Test
 
 /**
- * 
- * Test for cool plugin.
- * 
+ * Gradle-based logger.
+ *
  * @author Aestas/IT
  *
  */
-class SlideryTest {
+class GradleLogger implements Logger {
 
-  static Project project
+  Project project
+  boolean verbose
 
-  @BeforeClass
-  def static void buildProject() {
-    project = ProjectBuilder.builder().build()
-    project.with {
-      apply plugin: 'cool'
+  GradleLogger(Project project, boolean verbose) {
+    super()
+    this.verbose = verbose
+    this.project = project
+  }
+
+  void debug(String message) {
+    project.logger.debug(message)
+  }
+
+  void info(String message) {
+    if (verbose) {
+      project.logger.quiet(message)
+    } else {
+      project.logger.info(message)
     }
   }
 
-  @Test
-  public void testSetup() {
-    assert project != null
+  void warn(String message) {
+    project.logger.warn(message)
   }
-  
 }
