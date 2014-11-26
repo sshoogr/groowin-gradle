@@ -35,15 +35,14 @@ public class RemoteManagementPlugin implements Plugin<Project> {
   }
 
   void injectWinRMDslSupport(Project project) {
-    WinRMDslEngine dslEngine = new WinRMDslEngine(project.winrmOptions)
     project.metaClass.with {
       remoteManagement << { Closure cl ->
         setLogLevel(project)
-        dslEngine.remoteManagement(cl)
+        new WinRMDslEngine(project.winrmOptions).remoteManagement(cl)
       }
       remoteManagement << { String url, Closure cl ->
         setLogLevel(project)
-        dslEngine.remoteManagement(url, cl)
+        new WinRMDslEngine(project.winrmOptions).remoteManagement(url, cl)
       }
     }
   }
