@@ -1,26 +1,25 @@
 
-group = 'com.aestasit.infrastructure.groowin'
-version = '0.1.6'
+plugins {
 
-buildscript {
-  repositories { mavenCentral() }
-  dependencies { classpath 'net.saliman:gradle-cobertura-plugin:2.2.4' }
-  dependencies { classpath 'org.ajoberstar:gradle-git:0.8.0' }
+  id 'groovy'
+  id 'maven'
+  id 'eclipse'
+  id 'idea'
+  id 'project-report'
+
+  id "net.saliman.cobertura" version "2.2.5"
+  id "com.github.hierynomus.license" version "0.11.0"
+  id "org.ajoberstar.github-pages" version "0.10.0"
+  id "org.asciidoctor.gradle.asciidoctor" version "1.5.0"
+
 }
 
-apply plugin: 'groovy'
-apply plugin: 'maven'
-apply plugin: 'idea'
-apply plugin: 'eclipse'
-apply plugin: 'cobertura'
-apply plugin: 'github-pages'
+group = 'com.aestasit.infrastructure.groowin'
+version = '0.1.8-SNAPSHOT'
 
 apply from: 'repos.gradle'
 apply from: 'sonar.gradle'
 apply from: 'docs.gradle'
-
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
 
 dependencies {
   compile localGroovy()  
@@ -40,4 +39,8 @@ configurations {
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.1'
+}
+
+license {
+  header rootProject.file('HEADER')
 }
