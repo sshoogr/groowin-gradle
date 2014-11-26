@@ -22,7 +22,6 @@ apply from: 'sonar.gradle'
 apply from: 'docs.gradle'
 
 dependencies {
-  compile localGroovy()  
   compile gradleApi()
   compile 'com.aestasit.infrastructure.groowin:groowin:0.1.6'
   testCompile 'commons-io:commons-io:1.4'
