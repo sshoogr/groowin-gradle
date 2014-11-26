@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Groowin-gradle : A Gradle plugin for working with remote WinRM servers.">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Groowin-gradle</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/aestasit/groowin-gradle">View on GitHub</a>
+
+          <h1 id="project_title">Groowin-gradle</h1>
+          <h2 id="project_tagline">A Gradle plugin for working with remote WinRM servers.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/aestasit/groowin-gradle/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/aestasit/groowin-gradle/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="groowin-gradle" class="anchor" href="#groowin-gradle" aria-hidden="true"><span class="octicon octicon-link"></span></a>groowin-gradle</h1>
+
+<h2>
+<a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>The <code>groowin-gradle</code> is a <strong>Gradle</strong> plugin for working with remote <strong>WinRM</strong> (Windows) servers. It allows connecting, executing 
+remote commands, coping files and directories in a simple and concise way.</p>
+
+<p>The plugin was jointly developed by <strong>Aestas/IT</strong> (<a href="http://aestasit.com">http://aestasit.com</a>) and <strong>NetCompany A/S</strong> (<a href="http://www.netcompany.com/">http://www.netcompany.com/</a>) 
+to support quickly growing operations and hosting department.</p>
+
+<h3>
+<a id="quick-example" class="anchor" href="#quick-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick example</h3>
+
+<p>This is a simple example of some <strong>WinRM</strong> features available in the plugin:</p>
+
+<pre><code>task remoteTask &lt;&lt; {
+  remoteManagement {
+    exec 'rm -rf /tmp/cache/'
+    cp "$buildDir/cache.content", '/tmp/cache/cache.content'        
+  }
+}
+</code></pre>
+
+<h3>
+<a id="adding-plugin-to-the-build" class="anchor" href="#adding-plugin-to-the-build" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adding plugin to the build</h3>
+
+<p>The first thing you need to do in order to use the plugin is to define a build script dependency:</p>
+
+<pre><code>buildscript {
+  repositories { mavenCentral() }
+  dependencies {
+    classpath 'com.aestasit.infrastructure.groowin:groowin-gradle:0.1.2'
+  }
+}
+</code></pre>
+
+<p>And then apply the plugin:</p>
+
+<pre><code>apply plugin: 'remoteManagement'
+</code></pre>
+
+<p>Plugin can be configured with the help of <code>winrmOptions</code> structure:</p>
+
+<pre><code>winrmOptions {
+  ...
+}
+</code></pre>
+
+<p>It also gives access to a set of methods (<code>remoteManagment</code>, <code>exec</code>, <code>cp</code> etc.) defined by <strong>Groowin</strong> - <strong>Groovy WinRM DSL</strong>. </p>
+
+<p>For documentation on <strong>WinRM DSL</strong>, please, refer to <a href="https://github.com/aestasit/groowin">https://github.com/aestasit/groowin</a>.
+ </p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Groowin-gradle maintained by <a href="https://github.com/aestasit">aestasit</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
