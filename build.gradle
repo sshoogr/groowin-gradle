@@ -17,17 +17,17 @@ plugins {
 group = 'com.aestasit.infrastructure.groowin'
 version = '0.1.8-SNAPSHOT'
 
-apply from: 'repos.gradle'
-apply from: 'sonar.gradle'
-apply from: 'docs.gradle'
+apply from: 'gradle/repos.gradle'
+apply from: 'gradle/sonar.gradle'
+apply from: 'gradle/docs.gradle'
 
 dependencies {
   compile gradleApi()
-  compile 'com.aestasit.infrastructure.groowin:groowin:0.1.6'
-  testCompile 'commons-io:commons-io:1.4'
-  testCompile 'junit:junit:4.11'
-  testRuntime 'ch.qos.logback:logback-core:1.1.2'
-  testRuntime 'ch.qos.logback:logback-classic:1.1.2'
+  compile "com.aestasit.infrastructure.groowin:groowin:${groowinVersion}"
+  testCompile "commons-io:commons-io:${commonsIOVersion}"
+  testCompile "junit:junit:${junitVersion}"
+  testRuntime "ch.qos.logback:logback-core:${logbackVersion}"
+  testRuntime "ch.qos.logback:logback-classic:${logbackVersion}"
 }
 
 configurations {
