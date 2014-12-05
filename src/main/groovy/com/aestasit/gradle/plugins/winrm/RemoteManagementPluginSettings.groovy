@@ -16,7 +16,7 @@
 
 package com.aestasit.gradle.plugins.winrm
 
-import com.aestasit.winrm.WinRMOptions
+import com.aestasit.infrastructure.winrm.WinRMOptions
 
 /**
  * Configuration object holding options used for global WinRM plug-in configuration.

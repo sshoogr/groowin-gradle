@@ -16,7 +16,7 @@
 
 package com.aestasit.gradle.plugins.winrm
 
-import com.aestasit.winrm.dsl.WinRMDslEngine
+import com.aestasit.infrastructure.winrm.dsl.WinRMDslEngine
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -52,6 +52,5 @@ public class RemoteManagementPlugin implements Plugin<Project> {
       ((GradleLogger) project.winrmOptions.logger).verbose = project.winrmOptions.verbose
     }
   }
-
 
 }

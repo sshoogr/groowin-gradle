@@ -16,7 +16,7 @@
 
 package com.aestasit.gradle.plugins.winrm
 
-import com.aestasit.winrm.log.Logger
+import com.aestasit.infrastructure.winrm.log.Logger
 import org.gradle.api.Project
 
 /**
