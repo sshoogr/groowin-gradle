@@ -1,45 +1,94 @@
 
+/*
+ * Copyright (C) 2011-2020 Aestas/IT
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 plugins {
-
-  id 'groovy'
-  id 'maven'
-  id 'eclipse'
-  id 'idea'
-  id 'project-report'
-
-  id "net.saliman.cobertura" version "2.2.5"
-  id "com.github.hierynomus.license" version "0.11.0"
-  id "org.ajoberstar.github-pages" version "0.10.0"
-  id "org.asciidoctor.gradle.asciidoctor" version "1.5.0"
-
+    id 'idea'
+    id 'java-library'
+    id 'groovy'
+    id 'org.kordamp.gradle.plugin'
+    id 'org.ajoberstar.git-publish'
 }
 
-group = 'com.aestasit.infrastructure.groowin'
-version = '0.1.10-SNAPSHOT'
+def resolveProperty(Project project, String envKey, String propKey, String defaultValue) {
+    String value = System.getenv(envKey)
+    if (!value) value = project.findProperty(propKey)
+    !value? defaultValue : value
+}
 
-apply from: 'gradle/repos.gradle'
-apply from: 'gradle/sonar.gradle'
-apply from: 'gradle/docs.gradle'
+project.ext.'gradle.publish.key'    = resolveProperty(project, 'GRADLE_PUBLISH_KEY', 'gradle.publish.key', '**undefined**')
+project.ext.'gradle.publish.secret' = resolveProperty(project, 'GRADLE_PUBLISH_SECRET', 'gradle.publish.secret', '**undefined**')
+
+config {
+    info {
+        name          = 'Groowin Gradle Plugin'
+        description   = 'A Gradle plugin for WinRM connectivity'
+        inceptionYear = '2011'
+        tags          = ['winrm']
+
+        specification {
+            enabled = false
+        }
+
+        implementation {
+            enabled = false
+        }
+    }
+
+    docs {
+        groovydoc {
+            options {
+                link 'https://docs.gradle.org/5.0/javadoc/', 'org.gradle.'
+            }
+        }
+    }
+
+    plugins {
+        plugin {
+            name                = project.name
+            id                  = 'com.aestasit.groowin'
+            implementationClass = 'com.aestasit.gradle.plugins.winrm.RemoteManagementPlugin'
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+}
 
 dependencies {
-  compile gradleApi()
-  compile "com.aestasit.infrastructure.groowin:groowin:${groowinVersion}"
-  testCompile "commons-io:commons-io:${commonsIOVersion}"
-  testCompile "junit:junit:${junitVersion}"
-  testRuntime "ch.qos.logback:logback-core:${logbackVersion}"
-  testRuntime "ch.qos.logback:logback-classic:${logbackVersion}"
+  compileOnly gradleApi()
+
+  api "com.aestasit.infrastructure.groowin:groowin:${groowinVersion}"
+  
+  testImplementation "commons-io:commons-io:${commonsIOVersion}"
+  testImplementation "junit:junit:${junitVersion}"
+  
+  testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
+  testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
 }
 
-configurations {
-  all*.exclude group: 'commons-logging'
-  all*.exclude group: 'log4j'
-  all*.exclude module: 'slf4j-simple'
+gitPublish {
+    repoUri = rootProject.extensions.findByName('config').info.links.scm
+    branch = 'gh-pages'
+    contents {
+        from(groovydoc.outputs.files) {
+            into 'docs/groovydoc'
+        }
+    }
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = '2.1'
-}
-
-license {
-  header rootProject.file('HEADER')
-}
+gitPublishCommit.dependsOn(groovydoc)

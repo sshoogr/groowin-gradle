@@ -32,7 +32,7 @@ The first thing you need to do in order to use the plugin is to define a build s
 
 And then apply the plugin:
     
-    apply plugin: 'remoteManagement'
+    apply plugin: 'com.aestasit.groowin'
 
 Plugin can be configured with the help of `winrmOptions` structure:
 
